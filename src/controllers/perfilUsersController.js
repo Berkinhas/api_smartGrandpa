@@ -9,6 +9,18 @@ const auth = require('../middlewares/authentication')
 const router = express.Router()
 router.use(auth)
 
+router.get('/', async(req, res) => {
+    try {
+        const user = await UserCommon.findById(req.userId) || await UserCareviger.findById(req.userId)
+
+        res.status(200).send(user)
+    } catch (err) {
+        res.status(400).send({
+            message: "Não foi possível mostrar seu perfil"
+        })
+    }
+})
+
 
 router.get('/foto', async (req, res) => {
     try {

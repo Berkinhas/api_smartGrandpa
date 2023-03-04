@@ -136,10 +136,27 @@
                 }
             }
         },
-        "/pefil/:id": {
+        "/perfil/foto/": {
             "get": {
-                "summary": "Bucar foto de perfil do usuario",
-                "description": "Essa rota busca a foto de perfil do usuario",
+                "summary": "Mostra foto de Perfil",
+                "description": "Mostra foto de perfil do usuario",
+                "tags": ["Users"]
+            },
+            "requestBody": {
+                "description": "Dados para foto de perfil do usuario",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/pefil/": {
+            "get": {
+                "summary": "Exibir perfil",
+                "description": "Essa rota exibe seu perfil",
                 "tags": ["Users"]
             },
             "requestBody": {
@@ -170,11 +187,113 @@
                 }
             }
         },
-        "/perfil/curriculo/:id": {
+        "/perfil/curriculo/": {
             "get": {
-                "summary": "Curriculo",
-                "description": "Busca curriculo do usuario",
+                "summary": "Mostar curriculo",
+                "description": "Mostra curriculo do usuario",
                 "tags": ["Users"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/,meus_posts/": {
+            "get": {
+                "summary": "Mostar meus posts",
+                "description": "Mostra posts do usuario",
+                "tags": ["Posts"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/": {
+            "get": {
+                "summary": "Mostar posts",
+                "description": "Mostra os posts de todos os usuarios",
+                "tags": ["Posts"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/:id": {
+            "get": {
+                "summary": "Mostar posts",
+                "description": "Mostra os posts de um usuario especifico",
+                "tags": ["Posts"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/criar": {
+            "post": {
+                "summary": "Criar posts",
+                "description": "Cria um posts",
+                "tags": ["Posts"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/excluir/:id": {
+            "delete": {
+                "summary": "Excluir posts",
+                "description": "Exclui um post especifico",
+                "tags": ["Posts"]
+            },
+            "requestBody": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+
+                        }
+                    }
+                }
+            }
+        },
+        "/post/alterar/:id": {
+            "put": {
+                "summary": "Alterar posts",
+                "description": "Altera um post especifico",
+                "tags": ["Posts"]
             },
             "requestBody": {
                 "description": "",
