@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 
         if(!user) {
             res.status(401).send({
-                message: 'User not exist !'
+                message: 'Usuario não existe !'
             })
         }
 

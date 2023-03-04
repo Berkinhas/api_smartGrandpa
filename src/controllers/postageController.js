@@ -10,17 +10,32 @@ const router = express.Router()
 router.use(auth)
 
 router.get('/meus_posts', async (req, res) => {
-    const user = await UserCommon.findById(req.userId).populate('posts') || await UserCareviger.findById(req.userId).populate('posts')
 
-    res.status(200).send(user.posts)
+    try {
+        const user = await UserCommon.findById(req.userId).populate('posts') || await UserCareviger.findById(req.userId).populate('posts')
+    
+        res.status(200).send(user.posts)
+
+    } catch(err) {
+        res.status(400).send({
+            message: "Erro ao mostrar meus posts"
+        })
+    }
 
 
 })
 
 router.get('/', async (req, res) => {
-    const posts = await Postage.find()
+    try {
+        const posts = await Postage.find()
+    
+        return res.status(200).send(posts)
 
-    return res.send(posts)
+    } catch (err) {
+        return res.status(400).send({
+            message: "Erro ao mostrar posts"
+        })
+    }
 })
 
 router.get('/:id', async (req, res) => {

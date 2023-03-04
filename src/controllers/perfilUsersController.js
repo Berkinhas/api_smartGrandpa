@@ -10,12 +10,18 @@ const router = express.Router()
 router.use(auth)
 
 
-router.get('/foto/:id', async (req, res) => {
-    const { id } = req.params
+router.get('/foto', async (req, res) => {
+    try {
+        const user = await UserCommon.findById(req.userId).populate('fotos_perfil') || await UserCareviger.findById(req.userId).populate('fotos_perfil')
     
-    const user = await UserCommon.findById(id).populate('fotos_perfil') || await UserCareviger.findById(id).populate('fotos_perfil')
+        res.status(200).send(user.fotos_perfil)
 
-    res.status(200).send(user.fotos_perfil)
+    } catch(err) {
+        res.status(200).send({
+            message: 'Erro ao abrir foto'
+        })
+    }
+    
 })
 
 router.post('/foto', multer(multerConfig).single('file'), async (req, res) => {
@@ -44,16 +50,17 @@ router.post('/foto', multer(multerConfig).single('file'), async (req, res) => {
     }
 })
 
-router.put('/foto', multer(multerConfig).single('file'), async (req, res) => {
-    //continuar
-})
 
-router.get('/curriculo/:id', async (req, res) => {
-    const { id } = req.params
+router.get('/curriculo', async (req, res) => {
+    try {
+        const user = await UserCommon.findById(req.userId).populate('curriculo') || await UserCareviger.findById(req.userId).populate('curriculo')
     
-    const user = await UserCommon.findById(id).populate('curriculo') || await UserCareviger.findById(id).populate('curriculo')
-
-    res.status(200).send(user.curriculo)
+        res.status(200).send(user.curriculo)
+    } catch (err) {
+        res.status(400).send({
+            message: 'Erro ao abrir curriculo'
+        })
+    }
 })
 
 router.post('/curriculo', multer(multerConfig).single('file'), async (req, res) => {
@@ -82,12 +89,11 @@ router.post('/curriculo', multer(multerConfig).single('file'), async (req, res) 
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/', async (req, res) => {
     const { endereco, telefone, celular, data_nasc, idade } = req.body
-    const { id } = req.params
 
     try {
-        const user = await UserCommon.findById(id) || await UserCareviger.findById(id)
+        const user = await UserCommon.findById(req.userId) || await UserCareviger.findById(req.userId)
         user.endereco = endereco
         user.telefone = telefone
         user.celular = celular

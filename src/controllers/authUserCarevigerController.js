@@ -26,7 +26,7 @@ router.post('/registrar', async (req, res) => {
     }
 
     if(!sobrenome) {
-        return res.status(422).json({ message: "O nome é obrigatório!" });
+        return res.status(422).json({ message: "O sobrenome é obrigatório!" });
     }
     
     if (!email) {
