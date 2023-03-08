@@ -26,7 +26,7 @@ describe('Registration', () => {
                 idade: '21'
             })
 
-            expect(res.statusCode).toEqual(200)
+            expect(res.statusCode).toEqual(201)
             expect(res.body).toHaveProperty('userCareviger')
             expect(res.body).toHaveProperty('token')
             
@@ -55,7 +55,7 @@ describe('Login', () => {
 
     it('should register a new User.', async () => {
         const res = await request(app)
-            .post('/autenticacaoCuidador/login')
+            .post('/login')
             .send({
                 email: 'johndoe@email.com',
                 senha: 'password',

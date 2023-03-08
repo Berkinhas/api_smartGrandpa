@@ -102,9 +102,15 @@ router.post('/curriculo', multer(multerConfig).single('file'), async (req, res) 
 })
 
 router.put('/', async (req, res) => {
-    const { endereco, telefone, celular, data_nasc, idade } = req.body
+    const { cpf, endereco, telefone, celular, data_nasc, idade } = req.body
+    const cpfRegex = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
 
     try {
+
+        if(!cpfRegex.test(cpf)) {
+            return res.status(422).json({ message: "CPF invalido" });
+        }
+
         const user = await UserCommon.findById(req.userId) || await UserCareviger.findById(req.userId)
         user.endereco = endereco
         user.telefone = telefone

@@ -1,7 +1,6 @@
 const express = require('express')
 const UserCommon = require('../models/UserCommon')
 const jwt = require('jsonwebtoken')
-const bcryptjs = require('bcryptjs')
 const { config } = require('dotenv')
 
 config()
@@ -15,7 +14,7 @@ const generateToken = (params = {}) => {
 }
 
 router.post('/registrar', async (req, res) => {
-    const { nome, sobrenome, email, senha, endereco, telefone, celular, data_nasc, idade } = req.body
+    const { nome, sobrenome, email, senha } = req.body
     
     const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 

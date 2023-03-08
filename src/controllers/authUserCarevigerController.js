@@ -1,7 +1,6 @@
 const express = require('express')
 const UserCareviger = require('../models/UserCareviger')
 const jwt = require('jsonwebtoken')
-const bcryptjs = require('bcryptjs')
 const { config } = require('dotenv')
 
 config()
@@ -15,10 +14,9 @@ const generateToken = (params = {}) => {
 }
 
 router.post('/registrar', async (req, res) => {
-    const { nome, sobrenome, email, senha, cpf, endereco, telefone, celular, data_nasc, idade, } = req.body
+    const { nome, sobrenome, email, senha } = req.body
 
     const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-    const cpfRegex = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
 
 
     if (!nome) {
@@ -42,11 +40,7 @@ router.post('/registrar', async (req, res) => {
     }
 
 
-    if(!cpfRegex.test(cpf)) {
-        return res.status(422).json({ message: "CPF invalido" });
-    }
-
-    if(await UserCareviger.findOne({ email, cpf })) {
+    if(await UserCareviger.findOne({ email})) {
         return res.status(400).send({
             message: 'Usuario ja existe'
         })

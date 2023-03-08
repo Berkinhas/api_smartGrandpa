@@ -51,9 +51,9 @@ describe('Login', () => {
             })
     })
 
-    it('should register a new User.', async () => {
+    it('should authenticate a User.', async () => {
         const res = await request(app)
-            .post('/autenticacaoComum/login')
+            .post('/login')
             .send({
                 email: 'johndoe@email.com',
                 senha: 'password',
