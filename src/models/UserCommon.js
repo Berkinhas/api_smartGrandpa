@@ -4,9 +4,10 @@ const bcryptjs = require('bcryptjs')
 
 
 const UserCommonSchema = new mongoose.Schema({
-    cpf: {
+    cpf_common: {
         type: String,
-        required: false
+        required: false,
+        unique: false
     },
     nome: String,
     sobrenome: String,
