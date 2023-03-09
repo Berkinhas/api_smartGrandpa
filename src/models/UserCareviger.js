@@ -5,9 +5,10 @@ const bcryptjs = require('bcryptjs')
 
 const UserCarevigerSchema = new mongoose.Schema({
 
-    cpf: {
+    cpf_careviger: {
         type: String,
-        required: false
+        required: false,
+        unique: false
     },
 
     nome: String,
