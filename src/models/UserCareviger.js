@@ -7,7 +7,7 @@ const UserCarevigerSchema = new mongoose.Schema({
 
     cpf: {
         type: String,
-        unique: false
+        required: false
     },
 
     nome: String,
