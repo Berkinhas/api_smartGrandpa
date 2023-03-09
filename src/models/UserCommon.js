@@ -6,7 +6,7 @@ const bcryptjs = require('bcryptjs')
 const UserCommonSchema = new mongoose.Schema({
     cpf: {
         type: String,
-        unique: false
+        required: false
     },
     nome: String,
     sobrenome: String,
