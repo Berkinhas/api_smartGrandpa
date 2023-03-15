@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs')
 
 
 const UserCommonSchema = new mongoose.Schema({
-    cpf_common: {
+    cpf: {
         type: String,
         required: false,
         unique: false
