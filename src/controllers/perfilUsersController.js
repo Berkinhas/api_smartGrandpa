@@ -9,6 +9,7 @@ const auth = require('../middlewares/authentication')
 const router = express.Router()
 router.use(auth)
 
+
 router.get('/', async(req, res) => {
     try {
         const user = await UserCommon.findById(req.userId) || await UserCareviger.findById(req.userId)
@@ -21,6 +22,33 @@ router.get('/', async(req, res) => {
     }
 })
 
+router.get('/lista_perfil', async(req, res) => {
+    try {
+        const userCommon = await UserCommon.find().populate('posts').populate('files') 
+        const userCareviger = await UserCareviger.find().populate('posts').populate('files')
+
+        res.status(200).send({
+            userCommon, userCareviger
+        })
+    } catch (err) {
+        res.status(400).send({
+            message: "Não foi possível mostrar"
+        })
+    }
+})
+
+router.get('/:id', async(req, res) => {
+    const { id } = req.params
+    try {
+        const user = await UserCommon.findById(id) || await UserCareviger.findById(id)
+
+        res.status(200).send(user)
+    } catch (err) {
+        res.status(400).send({
+            message: "Não foi possível mostrar perfil"
+        })
+    }
+})
 
 router.get('/foto', async (req, res) => {
     try {
@@ -104,19 +132,28 @@ router.post('/curriculo', multer(multerConfig).single('file'), async (req, res) 
 router.put('/', async (req, res) => {
     const { cpf, endereco, telefone, celular, data_nasc, idade } = req.body
     const cpfRegex = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/
+    
+    if(!cpfRegex.test(cpf)) {
+        return res.status(422).json({ message: "CPF invalido" });
+    }
 
     try {
 
-        if(!cpfRegex.test(cpf)) {
-            return res.status(422).json({ message: "CPF invalido" });
+        if(await UserCommon.findOne({ cpf }) && await UserCareviger.findOne({ cpf })) {
+            return res.status(400).send({
+                message: "CPF ja cadastrado"
+            })
         }
 
+
         const user = await UserCommon.findById(req.userId) || await UserCareviger.findById(req.userId)
+        
         user.endereco = endereco
         user.telefone = telefone
         user.celular = celular
         user.data_nasc = data_nasc
         user.idade = idade
+        user.cpf = cpf
 
         user.save()
 
@@ -126,7 +163,7 @@ router.put('/', async (req, res) => {
 
     } catch (error) {
         res.status(400).send({
-            message: "Erro ao atualizar dados"
+            message: "Erro ao atualizar dados" + error
         })
     }
 

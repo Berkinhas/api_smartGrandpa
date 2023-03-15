@@ -39,14 +39,5 @@ router.post('/', async (req, res) => {
     })
 })
 
-router.get('/', async (req, res) => {
-    const userCommon = await UserCommon.find().populate('posts').populate('files')
-    const userCareviger = await UserCareviger.find().populate('posts').populate('files')
-
-    return res.send({
-        UsuariosComuns: userCommon,
-        UsuariosCuidadores: userCareviger
-    })
-})
 
 module.exports = app => app.use('/login', router)

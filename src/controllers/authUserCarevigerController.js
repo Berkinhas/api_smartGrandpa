@@ -1,5 +1,6 @@
 const express = require('express')
 const UserCareviger = require('../models/UserCareviger')
+const UserCommon = require('../models/UserCommon')
 const jwt = require('jsonwebtoken')
 const { config } = require('dotenv')
 
@@ -40,7 +41,7 @@ router.post('/registrar', async (req, res) => {
     }
 
 
-    if(await UserCareviger.findOne({ email})) {
+    if(await UserCareviger.findOne({ email }) && await UserCommon.findOne({ email })) {
         return res.status(400).send({
             message: 'Usuario ja existe'
         })
