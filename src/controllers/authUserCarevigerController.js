@@ -41,7 +41,7 @@ router.post('/registrar', async (req, res) => {
     }
 
 
-    if(await UserCareviger.findOne({ email }) && await UserCommon.findOne({ email })) {
+    if(await UserCareviger.findOne({ email }) || await UserCommon.findOne({ email })) {
         return res.status(400).send({
             message: 'Usuario ja existe'
         })
